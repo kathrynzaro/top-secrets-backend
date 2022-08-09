@@ -27,7 +27,7 @@ describe('backend-express-template routes', () => {
     return setup(pool);
   });
 
-  it('creates a new user', async () => {
+  it('#POST creates a new user', async () => {
     const res = await request(app).post('/api/v1/users').send(mockUser);
     const { firstName, lastName, email } = mockUser;
     expect(res.body).toEqual({
@@ -39,7 +39,7 @@ describe('backend-express-template routes', () => {
   });
 
 
-  it('signs in an existing user', async () => {
+  it('#POST signs in an existing user', async () => {
     await request(app).post('/api/v1/users').send(mockUser);
     const res = await request(app)
       .post('/api/v1/users/sessions')
@@ -47,14 +47,10 @@ describe('backend-express-template routes', () => {
     expect(res.status).toEqual(200);
   });
 
-  it('should delete a user\'s session', async () => {
+  it('#DELETE should delete a user\'s session', async () => {
     const [agent] = await registerAndLogin();
-    const res = await agent.get('/api/v1/secrets');
-    expect(res.status).toBe(200);
-    
-    await request(app).delete('/api/v1/users/');
-    const deleteRes = await request(app).get('/api/v1/secrets');
-    expect(deleteRes.status).toBe(401);
+    const resp = await agent.delete('/api/v1/users/sessions');
+    expect(resp.status).toBe(204);
   });
 
   afterAll(() => {

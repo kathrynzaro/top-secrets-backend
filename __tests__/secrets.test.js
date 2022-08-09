@@ -28,13 +28,15 @@ describe('backend-express-template routes', () => {
     return setup(pool);
   });
 
-  it('/secrets should return secrets if authenticated', async () => {
+  it('#GET /secrets should return secrets if authenticated', async () => {
     const [agent] = await registerAndLogin();
     const res = await agent.get('/api/v1/secrets');
     expect(res.status).toEqual(200);
+    expect(res.body.length).toEqual(3);
+
   });
 
-  it('/secrets should return a 401 if not authenticated', async () => {
+  it('#GET /secrets should return a 401 if not authenticated', async () => {
     const res = await request(app).get('/api/v1/secrets');
     expect(res.status).toEqual(401);
   });
@@ -50,7 +52,7 @@ describe('backend-express-template routes', () => {
     expect(res.body).toEqual({
       title: expect.any(String),
       description: expect.any(String),
-      created_at: expect.anything()
+      created_at: expect.any(String)
     });
   });
   
