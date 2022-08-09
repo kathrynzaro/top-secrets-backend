@@ -13,7 +13,6 @@ const mockUser = {
 };
 
 const registerAndLogin = async () => {
-  // const password = userProps.password ?? mockUser.password;
   const agent = request.agent(app);
   const user = await UserService.create({ ...mockUser });
 
