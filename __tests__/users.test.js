@@ -32,7 +32,7 @@ describe('backend-express-template routes', () => {
       .send({ email: 'test@example.com', password: '12345' });
     expect(res.status).toEqual(200);
   });
-  
+
   afterAll(() => {
     pool.end();
   });
